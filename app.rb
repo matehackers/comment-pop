@@ -5,6 +5,10 @@ require 'json'
 require './comment'
 
 configure do
+
+    enable :static
+    # set :public_folder, File.dirname(__FILE__) + '/static'
+
     DataMapper.setup(:default, "sqlite3::memory:")
 
     Comment.auto_migrate!

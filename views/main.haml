@@ -2,7 +2,16 @@
 %html
 
     %head
+
+        %script{:src => "http://popcornjs.org/code/dist/popcorn-complete.min.js"}
+        %script
+            document.addEventListener( "DOMContentLoaded", function () {
+            var qpopvideo = Popcorn.youtube(
+            '#video',
+            'http://www.youtube.com/watch?v=8FpigqfcvlM' ).play();});
+
         %title Comment pop
+
 
     %body
         %p Eae
