@@ -1,46 +1,35 @@
 require 'sinatra'
-require 'data_mapper'
 require 'json'
 
-class Comment
-  include DataMapper::Resource
-
-  property :id,             Serial
-  property :video_type,     String
-  property :commenter,      String
-  property :video,          String
-  property :content,        String
-  property :start_time,     Integer
-end
+# our models
+require './comment'
 
 configure do
     DataMapper.setup(:default, "sqlite3::memory:")
 
     Comment.auto_migrate!
-    c = Comment.new
-    c.video_type = 'youtube'
-    c.commenter = 'lucas'
-    c.video = 'yyR_eCAggsA'
-    c.content = 'lol'
-    c.start_time = 1
+
+    c = Comment.new :video_type => 'youtube', :commenter => 'lucas',
+                    :video => 'avideoid', :content => 'lol', :start_time => 1
     c.save
+    c = Comment.new :video_type => 'youtube', :commenter => 'guilherme',
+                    :video => 'avideoid', :content => 'lola', :start_time => 3
+    c.save
+
+    c = Comment.new :video_type => 'youtube', :commenter => 'alan',
+                    :video => 'othervideo', :content => 'lola', :start_time => 3
+    c.save
+
 end
 
 helpers do
 end
 
-# get '/'
+get '/' do
 
-# end
+end
 
 get '/comments/:video' do
-    c = Comment.get(1)
-    comments = []
-
-    hash = { :video => params[:video],
-             :user => c.commenter, :content => c.content }
-
-    comments[0] = hash
-
-    comments.to_json
+    c = Comment.all(:video => params[:video])
+    c.to_json
 end
