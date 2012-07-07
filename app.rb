@@ -26,7 +26,11 @@ helpers do
 end
 
 get '/' do
+    haml :main
+end
 
+post 'comment' do
+    @video = params[:video]
 end
 
 get '/comments/:video' do
